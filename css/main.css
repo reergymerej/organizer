@@ -4,8 +4,25 @@
 }
 
 .task {
-	display: inline-block;
+	position: relative;
+	/*display: inline-block;*/
 	border: 1px solid #09f;
-	padding: 20px;
+	padding: 10px;
+	margin: 5px;
+	list-style: none;
 	text-align: center;
+}
+
+.remove {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: red;
+	color: white;
+	padding: 4px;
+}
+
+.remove:hover {
+	cursor: pointer;
+	color: black;
 }

@@ -6,6 +6,20 @@ var org = {
 	id: undefined,
 	taskManager: undefined,
 	TYPES: ['todo', 'inprogress', 'waiting', 'done'],
+	getTaskEl: function () {
+		var el = $('<li/>').addClass('task');
+		el.append($('<span/>').addClass('label'));
+		el.append(getRemoveEl());
+		return el;
+
+		function getRemoveEl() {
+			var el = $('<span/>').addClass('remove').html('X');
+			el.click(function () {
+				console.log('hello');
+			});
+			return el;
+		}
+	},
 	TaskManager: function () {
 		// load tasks
 		var i = 0, max, t;
@@ -24,6 +38,7 @@ var org = {
 		this.created = parseInt(config.created, 10) || Date.now();
 		this.started = parseInt(config.started, 10) || undefined;
 		this.finished = parseInt(config.finished, 10) || undefined;
+		this.createView();
 	}
 };
 
@@ -56,6 +71,13 @@ org.TaskManager.prototype.remove = function (task) {
 	}
 };
 
+org.Task.prototype.createView = function () {
+	var el = org.getTaskEl();
+	el.data('task', this);
+	$('.label', el).html(this.description);
+	$('#' + this.type).append(el);
+};
+
 org.Task.prototype.save = function () {
 	org.taskManager.save();
 };
@@ -75,28 +97,39 @@ org.Task.prototype.setType = function (type) {
 
 $(function () {
 	org.init();
-	$('.taskHolder').click(function () {
-		var id = this.id,
-			el = $(this),
-			input = $('<input/>', {
-				type: 'text'
-			}),
-			div = $('<div/>', {
-				class: 'task'
-			});
+	$('.taskHolder').delegate(function (event) {
+		var me = this;
 
-		div.append(input);
-		el.append(div);
-		input.focus();
-		input.blur(function () {
-			var description = $.trim($(this).val());
-			if (description) {
-				org.taskManager.newTask('asdfasdf', id);
-				div.html(description);
-				$(this).remove();
-			} else {
-				div.remove();
-			}
-		});
-	});
+		if (event.target === this) {
+			// add a new event
+			(function () {
+				var id = me.id,
+					el = $(me),
+					input = $('<input/>', {
+						type: 'text'
+					}),
+					div = $('<div/>', {
+						class: 'task'
+					});
+
+				div.append(input);
+				el.append(div);
+				input.focus();
+				input.blur(function () {
+					var description = $.trim($(this).val());
+					if (description) {
+						org.taskManager.newTask(description, id);
+						$(this).remove();
+					}
+					div.remove();
+				});
+
+			}());
+		} else {
+			console.log('edit event');
+		}
+
+		
+	}, 'click');
+
 });
