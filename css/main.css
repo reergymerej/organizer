@@ -1,0 +1,11 @@
+.taskHolder {
+	border: 1px solid #666;
+	padding: 10px;
+}
+
+.task {
+	display: inline-block;
+	border: 1px solid #09f;
+	padding: 20px;
+	text-align: center;
+}
