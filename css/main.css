@@ -1,13 +1,25 @@
+body {
+	background-color: #666;
+}
+
+#main {
+	width: 500px;
+}
+
 .taskHolder {
 	border: 1px solid #666;
 	padding: 10px;
+	padding-bottom: 30px;
+	border-radius: 10px;
+	background-color: #CCC;
 }
 
 .task {
 	position: relative;
-	/*display: inline-block;*/
 	border: 1px solid #09f;
-	padding: 10px;
+	background-color: #fff;
+	border-radius: 5px;
+	padding: 5px;
 	margin: 5px;
 	list-style: none;
 	text-align: center;

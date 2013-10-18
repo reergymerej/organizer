@@ -15,7 +15,12 @@ var org = {
 		function getRemoveEl() {
 			var el = $('<span/>').addClass('remove').html('X');
 			el.click(function () {
-				console.log('hello');
+				var taskEl = $(this).closest('.task'),
+					task = taskEl.data('task');
+				event.stopPropagation();
+				task.remove();
+				taskEl.remove();
+				return false;
 			});
 			return el;
 		}
@@ -97,39 +102,66 @@ org.Task.prototype.setType = function (type) {
 
 $(function () {
 	org.init();
-	$('.taskHolder').delegate(function (event) {
+	// Add a new task.
+	$('.taskHolder').click(function () {
 		var me = this;
 
-		if (event.target === this) {
-			// add a new event
-			(function () {
-				var id = me.id,
-					el = $(me),
-					input = $('<input/>', {
-						type: 'text'
-					}),
-					div = $('<div/>', {
-						class: 'task'
-					});
+		var id = me.id,
+			el = $(me),
+			input = $('<input/>', {
+				type: 'text'
+			}),
+			div = $('<div/>', {
+				class: 'task'
+			});
 
-				div.append(input);
-				el.append(div);
-				input.focus();
-				input.blur(function () {
-					var description = $.trim($(this).val());
-					if (description) {
-						org.taskManager.newTask(description, id);
-						$(this).remove();
-					}
-					div.remove();
-				});
+		div.append(input);
+		el.append(div);
+		input.focus();
+		input.blur(function () {
+			var description = $.trim($(this).val());
+			if (description) {
+				org.taskManager.newTask(description, id);
+				$(this).remove();
+			}
+			div.remove();
+		});
 
-			}());
-		} else {
-			console.log('edit event');
+	});
+	
+	// Edit a task.
+	$('.taskHolder').on('click', '.task', function (event) {
+		var taskEl = $(this),
+			task = taskEl.data('task'),
+			input = $('<input/>', {
+				type: 'text',
+				value: task.description
+			});
+
+		event.stopPropagation();
+
+		$('.label', taskEl).html('');
+		taskEl.append(input);
+		input.focus();
+		input.blur(function () {
+			var description = $.trim($(this).val());
+			if (description) {
+				$(this).remove();
+				task.description = description;
+				$('.label', taskEl).html(description);
+				task.save();
+			} else {
+				taskEl.remove();
+				task.remove();
+			}
+		});
+		return false;
+	});
+
+	$('.taskHolder').sortable({
+		connectWith: '.taskHolder',
+		receive: function (event, ui) {
+			ui.item.data('task').setType(this.id);
 		}
-
-		
-	}, 'click');
-
+	});
 });
