@@ -10,7 +10,6 @@ var org = {
 		var el = $('<li/>').addClass('task');
 		el.append($('<span/>').addClass('label'));
 		el.append(getRemoveEl());
-		return el;
 
 		function getRemoveEl() {
 			var el = $('<span/>').addClass('remove').html('X');
@@ -24,6 +23,8 @@ var org = {
 			});
 			return el;
 		}
+
+		return el;
 	},
 	TaskManager: function () {
 		// load tasks
@@ -41,9 +42,16 @@ var org = {
 		this.type = config.type;
 		this.id = parseInt(config.id, 10) || org.id++;
 		this.created = parseInt(config.created, 10) || Date.now();
+		this.day = org.getDayMS(this.created);
 		this.started = parseInt(config.started, 10) || undefined;
 		this.finished = parseInt(config.finished, 10) || undefined;
 		this.createView();
+	},
+	/**
+	* Get the floor date in ms.
+	*/
+	getDayMS: function (ms) {
+		return ms - (ms % 8640000);
 	}
 };
 
@@ -164,4 +172,8 @@ $(function () {
 			ui.item.data('task').setType(this.id);
 		}
 	});
+
+	// $('#main').accordion({
+	// 	event: 'mouseover'
+	// });
 });

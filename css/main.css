@@ -1,5 +1,6 @@
 body {
 	background-color: #666;
+	font-size: 10px;
 }
 
 #main {
@@ -10,7 +11,7 @@ body {
 	border: 1px solid #666;
 	padding: 10px;
 	padding-bottom: 30px;
-	border-radius: 10px;
+	/*border-radius: 10px;*/
 	background-color: #CCC;
 }
 
@@ -22,7 +23,6 @@ body {
 	padding: 5px;
 	margin: 5px;
 	list-style: none;
-	text-align: center;
 }
 
 .remove {
