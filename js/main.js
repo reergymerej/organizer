@@ -116,11 +116,11 @@ $(function () {
 
 		var id = me.id,
 			el = $(me),
-			input = $('<input/>', {
+			input = $('<input size="41"/>', {
 				type: 'text'
 			}),
 			div = $('<div/>', {
-				class: 'task'
+				class: 'task '
 			});
 
 		div.append(input);
