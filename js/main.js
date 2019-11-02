@@ -116,11 +116,11 @@ $(function () {
 
 		var id = me.id,
 			el = $(me),
-			input = $('<input/>', {
+			input = $('<input size="42"/>', {
 				type: 'text'
 			}),
 			div = $('<div/>', {
-				class: 'task'
+				class: 'task '
 			});
 
 		div.append(input);
@@ -141,7 +141,7 @@ $(function () {
 	$('.taskHolder').on('click', '.task', function (event) {
 		var taskEl = $(this),
 			task = taskEl.data('task'),
-			input = $('<input/>', {
+			input = $('<input size="42"/>', {
 				type: 'text',
 				value: task.description
 			});

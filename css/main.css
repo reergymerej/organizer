@@ -1,17 +1,17 @@
 body {
-	background-color: #666;
+	background-color: rgb(172, 93, 224);
 	font-size: 10px;
 }
 
 #main {
 	width: 500px;
+	margin: 50px auto;
 }
 
 .taskHolder {
 	border: 1px solid #666;
-	padding: 10px;
-	padding-bottom: 30px;
-	/*border-radius: 10px;*/
+	padding: 15px;
+	border-radius: 10px;
 	background-color: #CCC;
 }
 
@@ -22,19 +22,26 @@ body {
 	border-radius: 5px;
 	padding: 5px;
 	margin: 5px;
+	height: 30px;
+	font-size: 12px;
 	list-style: none;
 }
 
 .remove {
 	position: absolute;
-	top: 0;
-	right: 0;
-	background-color: red;
-	color: white;
-	padding: 4px;
+	top: 5px;
+	right: 5px;
+	bottom: 5px;
+	width: 10px;
+	background-color: rgb(219, 65, 65);
+	color: rgb(19, 18, 18);
+	padding: 8px;
+	font-size: 1.2em;
+	border-radius: 0.2em;
 }
 
 .remove:hover {
 	cursor: pointer;
-	color: black;
+	color: white;
+	background-color: red;
 }
